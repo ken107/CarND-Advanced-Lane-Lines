@@ -34,13 +34,13 @@ def process(img):
     #return to_rgb(binary_warped)
     lane_pts = find_lane_points(binary_warped, window_size=(100,60), prev_pts=lane_pts, margin=100, thresh=3000)
     lane_warped = np.zeros(img.shape, img.dtype)
-    #draw_lane(lane_warped, lane_pts, (0,255,0))
-    for pt in lane_pts[0]: draw_window(lane_warped, pt, (100,60), (255,0,0))
-    for pt in lane_pts[1]: draw_window(lane_warped, pt, (100,60), (0,0,255))
+    draw_lane(lane_warped, lane_pts, (0,255,0))
+    #for pt in lane_pts[0]: draw_window(lane_warped, pt, (100,60), (255,0,0))
+    #for pt in lane_pts[1]: draw_window(lane_warped, pt, (100,60), (0,0,255))
     #return cv2.addWeighted(to_rgb(binary_warped), .5, lane_warped, .5, 0)
     lane_img = warp_backward(lane_warped)
     final = cv2.addWeighted(undist, 1, lane_img, .3, 0)
-    print_curve_stats(final, lane_pts, xm_per_pix=2.5/700, ym_per_pix=30.0/720, color=(255,255,255))
+    print_curve_stats(final, lane_pts, lane_width_m=3.7, ym_per_pix=30.0/720, color=(255,255,255))
     return final
 
 
