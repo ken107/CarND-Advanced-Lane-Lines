@@ -30,6 +30,7 @@ def process(img):
     high_red = threshold(contrast_enhanced, thresh=(210,255))
     edges = threshold(sobel(contrast_enhanced, orient='x', ksize=7), thresh=(0.15,1))
     combined = cv2.bitwise_or(high_red, edges)
+    #return to_rgb(combined)
     binary_warped = warp_forward(combined)
     #return to_rgb(binary_warped)
     lane_pts = find_lane_points(binary_warped, window_size=(100,60), prev_pts=lane_pts, margin=100, thresh=3000)
@@ -46,17 +47,18 @@ def process(img):
 
 
 ### IMAGE
+img = mpimg.imread('test_images/test5.jpg')
 #clip1 = VideoFileClip("project_video.mp4")
 #img = clip1.get_frame(40.5)
 #plt.imsave('test_images/challenge_straight.jpg', img)
-#result = process(img)
+result = process(img)
 #img2 = clip1.get_frame(40.7)
 #result2 = process(img2)
-#plt.imshow(result)
-#plt.show()
+plt.imshow(result)
+plt.show()
 
 
 ### VIDEO
-clip1 = VideoFileClip("project_video.mp4")
-clip2 = clip1.fl_image(process)
-clip2.write_videofile("R:/project_video_birds_eye.mp4", audio=False)
+#clip1 = VideoFileClip("project_video.mp4")
+#clip2 = clip1.fl_image(process)
+#clip2.write_videofile("R:/project_video_birds_eye.mp4", audio=False)

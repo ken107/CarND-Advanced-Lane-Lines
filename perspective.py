@@ -34,13 +34,14 @@ def calc_warp(image_size, vanishing_point, percent_visible, width_compression):
 
 
 def main():
-    forward, backward = calc_warp((1280,720), (639,419), .9, .75)
-    img = mpimg.imread('test_images/straight_lines1.jpg')
-    img2 = mpimg.imread('test_images/straight_lines2.jpg')
+    vanishing_point = (639,419)
+    forward, backward = calc_warp((1280,720), vanishing_point, .9, .75)
+    img = mpimg.imread('test_images/straight_lines2.jpg')
+    cv2.line(img, (0,720), vanishing_point, (255,0,0), 4)
+    cv2.line(img, (1280,720), vanishing_point, (255,0,0), 4)
     warped = forward(img)
-    warped2 = forward(img2)
-    plt.subplot(211); plt.imshow(warped)
-    plt.subplot(212); plt.imshow(warped2)
+    plt.subplot(121); plt.imshow(img)
+    plt.subplot(122); plt.imshow(warped)
     plt.show()
 
 if __name__ == '__main__':

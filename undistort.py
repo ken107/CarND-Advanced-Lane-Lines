@@ -3,6 +3,8 @@ import pickle
 import glob
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 def calc_undistort(calibration_image_glob, pattern_size, input_image_size, save_file):
     if os.path.isfile(save_file):
@@ -29,11 +31,12 @@ def calc_undistort(calibration_image_glob, pattern_size, input_image_size, save_
 
 
 def main():
-    gray = cv2.imread('camera_cal/calibration2.jpg', 0)
-    undistort = calc_undistort('camera_cal/calibration*.jpg', (9,6), gray.shape[::-1], 'save/undistort.p')
-    result = undistort(gray)
-    cv2.imshow('', result)
-    cv2.waitKey()
+    img = mpimg.imread('camera_cal/calibration2.jpg')
+    undistort = calc_undistort('camera_cal/calibration*.jpg', (9,6), (img.shape[1], img.shape[0]), 'save/undistort.p')
+    result = undistort(img)
+    plt.subplot(121); plt.imshow(img)
+    plt.subplot(122); plt.imshow(result)
+    plt.show()
 
 if __name__ == '__main__':
     main()
